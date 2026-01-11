@@ -1,0 +1,21 @@
+{% macro render_table(title, headers, rows) %}
+<h2>{{ title }}</h2>
+<table border="1" cellpadding="5">
+    <thead>
+        <tr>
+        {% for h in headers %}
+            <th>{{ h }}</th>
+        {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+    {% for r in rows %}
+        <tr>
+        {% for c in r %}
+            <td>{{ c }}</td>
+        {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endmacro %}

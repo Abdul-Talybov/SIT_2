@@ -1,0 +1,29 @@
+{% import "macros/tables.jinja" as t %}
+
+<h1>F1 — статистика</h1>
+
+{{ t.render_table(
+    "Гонщики",
+    ["ID", "Имя", "Фамилия", "Национальность"],
+    drivers_table
+) }}
+
+{{ t.render_table(
+    "Трассы",
+    ["ID", "Название", "Широта", "Долгота"],
+    circuits_table
+) }}
+
+<h2>Агрегированная статистика</h2>
+
+{{ t.render_table(
+    "Сумма очков по гонщикам",
+    ["Гонщик", "Очки"],
+    points_by_driver_table
+) }}
+
+{{ t.render_table(
+    "Сумма очков по конструкторам",
+    ["Команда", "Очки"],
+    points_by_constructor_table
+) }}
