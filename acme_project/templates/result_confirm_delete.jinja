@@ -1,0 +1,14 @@
+<h2>Удалить результат?</h2>
+
+<p>
+    {{ result.driver }} —
+    {{ result.event }} —
+    {{ result.constructor }}
+</p>
+
+<form method="post">
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <button type="submit">Удалить</button>
+</form>
+
+<a href="/">Отмена</a>

@@ -1,0 +1,9 @@
+<h1>Результат</h1>
+
+<form method="post">
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    {{ form.as_p() }}
+    <button type="submit">Сохранить</button>
+</form>
+
+<a href="/">Назад</a>

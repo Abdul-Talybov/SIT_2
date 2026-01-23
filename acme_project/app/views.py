@@ -1,15 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Sum
 from .models import Driver, Constructor, Circuit, Event, Result
+from .forms import ResultForm
 
 def index(request):
 
     drivers = Driver.objects.all()
     circuits = Circuit.objects.all()
     events = Event.objects.all()
-    results = Result.objects.select_related(
+    results_list = Result.objects.select_related(
         "driver", "event", "constructor"
     )
+    last_result = Result.objects.order_by('-id').first()
 
     points_by_driver = (
         Result.objects
@@ -35,6 +37,45 @@ def index(request):
         "circuits_table": circuits_table,
         "points_by_driver_table": points_by_driver_table,
         "points_by_constructor_table": points_by_constructor_table,
+        "results": results_list,
+        "r": last_result,
     }
 
     return render(request, "index.jinja", context)
+
+def result_create(request):
+    if request.method == "POST":
+        form = ResultForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("index")
+    else:
+        form = ResultForm()
+
+    return render(request, "result_form.jinja", {"form": form})
+
+
+def result_update(request, pk):
+    result = get_object_or_404(Result, pk=pk)
+
+    if request.method == "POST":
+        form = ResultForm(request.POST, instance=result)
+        if form.is_valid():
+            form.save()
+            return redirect("index")
+    else:
+        form = ResultForm(instance=result)
+
+    return render(request, "result_form.jinja", {"form": form})
+
+
+def result_delete(request, pk):
+    result = get_object_or_404(Result, pk=pk)
+
+    if request.method == "POST":
+        result.delete()
+        return redirect("index")
+
+    return render(request, "result_confirm_delete.jinja", {"result": result})
+
+

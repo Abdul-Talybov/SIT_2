@@ -14,6 +14,31 @@
     circuits_table
 ) }}
 
+<h2>Результаты гонок</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Гонщик</th>
+        <th>Событие</th>
+        <th>Конструктор</th>
+        <th>Очки</th>
+        <th>Действия</th>
+    </tr>
+    {% for result in results %}
+    <tr>
+        <td>{{ result.id }}</td>
+        <td>{{ result.driver.forename }} {{ result.driver.surname }}</td>
+        <td>{{ result.event.event_name }}</td>
+        <td>{{ result.constructor.constructor_name }}</td>
+        <td>{{ result.points }}</td>
+        <td>
+            <a href="/results/{{ result.id }}/edit/">Редактировать</a>
+            <a href="/results/{{ result.id }}/delete/">Удалить</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
 <h2>Агрегированная статистика</h2>
 
 {{ t.render_table(
@@ -27,3 +52,8 @@
     ["Команда", "Очки"],
     points_by_constructor_table
 ) }}
+
+<a href="/results/add/">Добавить результат</a>
+<a href="/results/{{ r.id }}/edit/">Редактировать</a>
+<a href="/results/{{ r.id }}/delete/">Удалить</a>
+
